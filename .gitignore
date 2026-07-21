@@ -80,9 +80,28 @@ printlens_*
 # Note it is ~37MB and changes wholesale on every rebuild (VACUUM repacks the
 # file), so each committed update adds roughly that much to history and git
 # cannot delta it.
+# Card catalog and the v3 embedding galleries are tracked on purpose: they are
+# what the app needs to identify cards, and they are distributed together as a
+# matched set. The galleries are derived data -- fp16 vectors only match query
+# embeddings from the exact model that produced them, so they are inert without
+# the (never-published) .tflite. printlens_v3_families.tsv is the exception: it
+# is hand-curated reprint supervision and does carry standalone value.
+#
+# Allow rules are per-file on purpose. A broader pattern such as "!*.bin" would
+# also un-ignore rtmo_stockhead_v2_dcc_weights.bin, which is model weights.
 composeApp/src/androidMain/assets/*
 !composeApp/src/androidMain/assets/cards.db
+!composeApp/src/androidMain/assets/master_index_v3.bin
+!composeApp/src/androidMain/assets/master_index_v3_ids.txt
+!composeApp/src/androidMain/assets/printlens_v3_detail_index.bin
+!composeApp/src/androidMain/assets/printlens_v3_detail_ids.txt
+!composeApp/src/androidMain/assets/printlens_v3_families.tsv
+
+# Debug-only assets are the deprecated v2 model and gallery. Never tracked.
 composeApp/src/debug/assets/*
+
+# iOS has no v3 embedding runtime, so no gallery is tracked here. Its v2 index
+# would be useless publicly anyway, since the v2 model is not published.
 iosApp/iosApp/BundledAssets/*
 !iosApp/iosApp/BundledAssets/cards.db
 **/assets/metadata.yaml
