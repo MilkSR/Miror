@@ -1,0 +1,112 @@
+# IDE and local machine settings
+.idea/
+*.iml
+local.properties
+.DS_Store
+xcuserdata/
+**/xcuserdata/
+
+# Gradle, Kotlin, Android, and native build output
+.gradle/
+.gradle-user/
+.kotlin/
+**/build/
+.cxx/
+**/.cxx/
+.externalNativeBuild/
+captures/
+*.apk
+*.aab
+*.dm
+*.log
+
+# CocoaPods and Xcode output
+iosApp/Pods/
+DerivedData/
+*.xcuserstate
+
+# ---------------------------------------------------------------------------
+# Model and gallery artifacts. These never ship in the open repo.
+#
+# Two layers on purpose. The extension lists catch a stray artifact anywhere
+# in the tree. The asset-directory rules at the bottom deny by default, so a
+# file with a name nobody predicted is still ignored.
+#
+# The rules here used to name master_index.bin / master_index_ids.txt
+# explicitly. Those are v2-era names; when the v3 files landed under new
+# names the rules silently covered nothing. Do not go back to listing files
+# one at a time -- widen the pattern instead.
+# ---------------------------------------------------------------------------
+
+# Trained weights and converted graphs
+*.tflite
+*.onnx
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.pb
+*.gguf
+*.engine
+*.plan
+*.dlc
+*.mlmodel
+*.mlpackage/
+*.mlmodelc/
+*.param
+*.ncnn
+*.ort
+*.lite
+*.tfl
+*.weights
+*.h5
+
+# Embedding galleries, indexes, and their id/family sidecars
+*.bin
+*.npy
+*.npz
+*.pkl
+master_index*
+printlens_*
+
+# Bundled asset directories: deny by default, then allow the card catalog.
+#
+# Deny-by-default is the point. Naming individual model files here is what
+# rotted last time -- the rules listed master_index.bin, the v3 files landed
+# under new names, and nothing caught them. Anything dropped in these
+# directories is ignored unless it appears on a "!" line below.
+#
+# cards.db is public card data derived from TCGdex and is tracked on purpose.
+# Note it is ~37MB and changes wholesale on every rebuild (VACUUM repacks the
+# file), so each committed update adds roughly that much to history and git
+# cannot delta it.
+composeApp/src/androidMain/assets/*
+!composeApp/src/androidMain/assets/cards.db
+composeApp/src/debug/assets/*
+iosApp/iosApp/BundledAssets/*
+!iosApp/iosApp/BundledAssets/cards.db
+**/assets/metadata.yaml
+
+# Signing material and environment files
+.env
+.env.*
+.envrc
+*.env
+key.properties
+google-services.json
+GoogleService-Info.plist
+*.jks
+*.keystore
+*.p12
+*.pem
+*.key
+*.cer
+*.crt
+*.der
+*.mobileprovision
+*.provisionprofile
+
+# Miscellaneous generated files
+__pycache__/
+*.py[cod]
+tmp_frame*.png
