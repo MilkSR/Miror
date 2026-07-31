@@ -1,0 +1,7 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# The content signature covers the ids body byte-for-byte. Do not let a checkout
+# rewrite its line endings and invalidate an otherwise genuine release.
+composeApp/src/androidMain/assets/master_index_v3_ids.txt -text
+iosApp/iosApp/BundledAssets/master_index_v3_ids.txt -text

@@ -20,6 +20,19 @@ captures/
 *.dm
 *.log
 
+# Internal test suites and debug-only source sets
+composeApp/src/*Debug/
+composeApp/src/*Test/
+composeApp/src/debug/
+scripts/**/tests/
+tests/
+
+# Internal Miror Link engineering notes. The public README is intentionally
+# tracked; design reviews and platform handoffs stay in the private project.
+docs/miror-link/MIROR_LINK_PLAN.md
+docs/miror-link/MIROR_LINK_HARDENING_PLAN.md
+docs/miror-link/MIROR_LINK_IOS_HANDOFF.md
+
 # CocoaPods and Xcode output
 iosApp/Pods/
 DerivedData/
@@ -111,6 +124,8 @@ iosApp/iosApp/BundledAssets/*
 .env.*
 .envrc
 *.env
+**/*SIGNING*KEYS*.md
+!**/*SIGNING*PUBLIC*KEYS*.md
 key.properties
 google-services.json
 GoogleService-Info.plist
