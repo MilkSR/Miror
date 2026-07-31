@@ -1,7 +1,3 @@
-<img align="right" width="140" height="140" src="../../images/app-icon-2026-06-24-masked.png" />
-
-<img src="../../images/title.svg" width="420" height="50" alt="Miror TCG Scanner" />
-
 # Miror Link
 
 Miror is a card scanner and collection manager for Pokemon TCG collectors. Point
