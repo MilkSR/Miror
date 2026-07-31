@@ -11,6 +11,19 @@ connection. Card recognition runs on-device, collection data belongs to the user
 and local sharing should feel as natural as showing someone the cards in your
 binder.
 
+## What Miror does
+
+- identifies Pokemon cards through the device camera;
+- tracks physical copies, printing types, condition, grading, notes, tags, and
+  local scan images;
+- keeps the collection and card catalog useful offline;
+- supports collection backup, restore, and compact Miror Sigil sharing;
+- supports direct nearby collection browsing through Miror Link.
+
+Android is Miror's current primary release platform. Miror shares much of its
+application code with iOS through Kotlin Multiplatform, but Miror Link is not yet
+enabled on iOS.
+
 ## Source availability
 
 Miror is being made source available in stages. **Only Miror Link is currently
@@ -37,19 +50,6 @@ receiving user must approve the transfer, and the package must pass Miror's norm
 signature and content checks before anything can be installed.
 
 [Read more about Miror Link](docs/miror-link/README.md)
-
-## What Miror does
-
-- identifies Pokemon cards through the device camera;
-- tracks physical copies, printing types, condition, grading, notes, tags, and
-  local scan images;
-- keeps the collection and card catalog useful offline;
-- supports collection backup, restore, and compact Miror Sigil sharing;
-- supports direct nearby collection browsing through Miror Link.
-
-Android is Miror's current primary release platform. Miror shares much of its
-application code with iOS through Kotlin Multiplatform, but Miror Link is not yet
-enabled on iOS.
 
 ## Content releases
 
