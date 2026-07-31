@@ -9,18 +9,6 @@ connect directly, exchange read-only collection views, and browse each other's
 cards without copying a share code or sending their collections through a Miror
 server.
 
-## Source availability
-
-Miror is being made source available in stages. At present, **Miror Link is the
-only part of the application published here**, together with the narrow collection
-manifest and signed-content boundaries needed to show its peer-facing behavior
-from end to end. The rest of the Miror application remains private for now.
-
-This is not intended to be a standalone build of the full app. It is the actual
-Miror Link production implementation, published under this repository's license
-so its connection model, protocol, resource limits, and durable-write boundary
-can be understood directly from the code.
-
 ## How Link works
 
 Both people choose a nickname and open Link from Miror's sharing screen. When one
