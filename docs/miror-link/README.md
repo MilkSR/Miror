@@ -1,91 +1,106 @@
+<img align="right" width="140" height="140" src="../../images/app-icon-2026-06-24-masked.png" />
+
+<img src="../../images/title.svg" width="420" height="50" alt="Miror TCG Scanner" />
+
 # Miror Link
 
-Miror Link lets two people nearby open a direct, temporary connection and browse each
-other's card collections without copying a share code or sending collection data through
-a Miror server.
+Miror is a card scanner and collection manager for Pokemon TCG collectors. Point
+the camera at a card, let Miror identify it, save the scan, and keep track of the
+physical collection that is actually in your hands.
 
-Both people choose a nickname and open Link. When the nearby match is clear, Miror
-connects automatically; when several people are nearby, it asks the user to choose.
-Either person can then browse the other's read-only collection. Card photos can be
-requested as cards are opened and can be disabled by either side.
+Miror Link brings that collection into the room with you. Two nearby people can
+connect directly, exchange read-only collection views, and browse each other's
+cards without copying a share code or sending their collections through a Miror
+server.
 
-## Privacy and connection model
+## Source availability
 
-- Link operates only while its screen is open and stops when the app leaves the
-  foreground.
-- It uses ephemeral session identifiers rather than accounts or persistent device IDs.
-- Collections and card photos travel directly between the nearby devices.
-- Miror does not treat collection contents or card photos as confidential, so Link does
-  not add its own encryption, identity system, or pairing-code comparison on top of the
-  nearby transport.
-- Without an out-of-band identity check, a nearby device can impersonate another nearby
-  participant. Link therefore does not use the connection itself as authority for any
-  durable content.
+Miror is being made source available in stages. At present, **Miror Link is the
+only part of the application published here**, together with the narrow collection
+manifest and signed-content boundaries needed to show its peer-facing behavior
+from end to end. The rest of the Miror application remains private for now.
 
-## Relayed content updates
+This is not intended to be a standalone build of the full app. It is the actual
+Miror Link production implementation, published under this repository's license
+so its connection model, protocol, resource limits, and durable-write boundary
+can be understood directly from the code.
 
-A device with newer card data may offer that update to its peer. The receiving user must
-approve the transfer before it begins.
+## How Link works
 
-Relayed packages use the same content format as Miror's published releases. The catalog,
-embedding gallery, ID manifest, and content version are covered by one official
-signature. A relaying phone can forward that proof but cannot create or alter it.
-Tampered, incomplete, mismatched, unsigned, implausibly versioned, or rollback packages
-are rejected before the catalog is installed.
+Both people choose a nickname and open Link from Miror's sharing screen. When one
+nearby match is clear, Miror connects automatically. If several people are close
+enough to be plausible matches, it asks the user to choose instead.
 
-The verification keys are public by design and are included in both the application and
-this source snapshot. Published content bundles can therefore be independently checked
-without trusting the phone that relayed them.
+Once connected, each person receives a read-only view of the other's shared
+collection. Either side can open cards and move through the collection normally.
+Local card photos are requested only as they are viewed, and sending or receiving
+those photos can be disabled independently.
 
-## Resource and abuse controls
+Link is deliberately temporary:
 
-Link bounds advertisements, tracked peers, protocol frames, collection snapshots, photo
-requests and assemblies, image dimensions, staged content, and transfer duration. Only
-accepted protocol progress extends an active session; duplicate or replayed messages do
-not. Discovery releases its radios after 90 seconds, and a completed exchange remains
-available for up to 10 minutes of meaningful viewing activity.
+- it operates only while the Link experience is active in the foreground;
+- it uses ephemeral session identifiers rather than accounts or permanent device
+  identities;
+- ending Link releases the nearby connection and removes temporary received
+  photos and transfer staging;
+- the received collection remains available to browse for the rest of the local
+  viewing session.
 
-Received photos are session-only, validated before decoding, and governed by a user
-off-switch. Interrupted content staging and temporary received photos are reclaimed
-without modifying the user's collection.
+## Local content sharing
+
+If one person has newer Miror card data, Link can offer that content release to
+the other device. The receiving user decides whether to accept it; a nearby peer
+cannot silently install an update.
+
+Relayed content uses the same signed package format as Miror's published content
+releases. The card catalog, embedding gallery, ID manifest, and release version
+are covered by one official signature. A phone can relay that proof, but it cannot
+create a valid replacement or alter the signed files.
+
+Unsigned, modified, mismatched, incomplete, implausibly versioned, and rollback
+packages are rejected before installation. The public verification keys and the
+code defining the signed message are included here so published content packages
+can be checked independently of the phone carrying them.
+
+## Privacy and safety model
+
+Collections and optional card photos travel directly between nearby devices.
+Miror does not add accounts, persistent peer identities, or a pairing-code ritual
+to Link. Without an out-of-band identity comparison, a nearby participant can
+impersonate another nearby participant; Link therefore treats the connection as
+temporary and untrusted, and never treats it as authority for durable content.
+
+Peer-controlled input is bounded throughout the protocol. Link limits discovery
+time, tracked peers, frame and manifest sizes, photo requests and assemblies,
+image dimensions, content staging, and transfer duration. Replayed or duplicate
+messages do not extend a session. Received photos are validated before decoding
+and remain temporary. Durable content must pass the official signature and
+package checks before it can reach the application catalog.
 
 ## Platform status
 
 Android is the currently supported Miror Link platform.
 
-The shared Kotlin and Swift-facing iOS implementation is included for review, but iOS
-Link remains unavailable until its Nearby Connections dependency, generated Bonjour
-service type, and native backpressure behavior have been integrated and verified on
-Apple hardware.
+The shared Kotlin implementation and Swift-facing iOS transport are included in
+this source release. Miror Link remains unavailable on iOS until the Nearby
+Connections dependency, generated Bonjour service type, native backpressure, and
+Apple-hardware verification are complete.
 
-## Reviewing the source
+## Source layout
 
-The feature-owned implementation is grouped under:
+The feature-owned implementation lives under:
 
 - `composeApp/src/commonMain/kotlin/com/selenite/scanner/link/`
 - `composeApp/src/androidMain/kotlin/com/selenite/scanner/link/`
 - `composeApp/src/iosMain/kotlin/com/selenite/scanner/link/`
 - `iosApp/iosApp/MirorLink/`
 
-The audit boundary also includes the share-visible collection-field mapper, compact
-collection-manifest codec reached by Link, and the signed-content verifier, staging
-rules, and installation gate reached by a relayed update. These are included because
-they determine what leaves the device, parse peer-controlled bytes, or decide whether
-those bytes may affect durable application state.
+The published source also includes the collection-field mapper and compact
+manifest codec used for collection exchange, plus the content verifier and
+installation gate reached by locally relayed updates. Those adjacent files are
+included because they determine what a peer can receive and whether any received
+bytes may affect durable application state.
 
-The audit boundary is the path described above. A broader Miror source distribution may
-also contain host-app plumbing such as the collection screen, settings storage,
-activity/bootstrap code, build configuration, or the catalog's transactional database
-implementation. Those surrounding files are not required to inspect MLNK frame handling,
-session behavior, resource bounds, collection decoding, image gating, content signature
-verification, or the rule that verification precedes installation.
-
-This directory is organized as an audit guide rather than a promise that the surrounding
-repository is a standalone Miror Link module. It identifies the complete
-security-sensitive path reached by a Link peer even when that path is published alongside
-additional Miror source.
-
-Internal test suites, debug probes, trained model weights, release credentials, local
-configuration, and user/device data are not part of this source snapshot. Production
-code defining and verifying the signed-content format and the public verification keys
-is included.
+Full application screens, scanner models, general collection-management code,
+and unrelated Miror features are not part of the current source-available
+release.
