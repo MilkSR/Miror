@@ -30,6 +30,27 @@ Link is deliberately temporary:
 - the received collection remains available to browse for the rest of the local
   viewing session.
 
+## Miror Link in use
+
+<table>
+  <tr>
+    <th>Start from collection sharing</th>
+    <th>Find a nearby collector</th>
+  </tr>
+  <tr>
+    <td><img src="images/miror-link-share.png" alt="Miror collection sharing screen with Miror Link and card-photo controls" width="320"></td>
+    <td><img src="images/miror-link-discovery.png" alt="Miror Link looking for a nearby collector" width="320"></td>
+  </tr>
+  <tr>
+    <th>Browse their shared collection</th>
+    <th>View local photos on demand</th>
+  </tr>
+  <tr>
+    <td><img src="images/miror-link-shared-collection.png" alt="A nearby collector's read-only collection shared through Miror Link" width="320"></td>
+    <td><img src="images/miror-link-local-photo.png" alt="A locally photographed card shown beside its catalog image through Miror Link" width="320"></td>
+  </tr>
+</table>
+
 ## Local content sharing
 
 If one person has newer Miror card data, Link can offer that content release to
