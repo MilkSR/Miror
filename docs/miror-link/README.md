@@ -4,9 +4,9 @@ Miror is a card scanner and collection manager for Pokemon TCG collectors. Point
 the camera at a card, let Miror identify it, save the scan, and keep track of the
 physical collection that is actually in your hands.
 
-Miror Link brings that collection into the room with you. Two nearby people can
+Miror Link brings that collection with you. Two nearby people can
 connect directly, exchange read-only collection views, and browse each other's
-cards without copying a share code or sending their collections through a Miror
+cards without copying a share code or sending their data through any
 server.
 
 ## How Link works
@@ -70,7 +70,7 @@ can be checked independently of the phone carrying them.
 ## Privacy and safety model
 
 Collections and optional card photos travel directly between nearby devices.
-Miror does not add accounts, persistent peer identities, or a pairing-code ritual
+Miror does not add accounts, persistent peer identities, or a pairing code
 to Link. Without an out-of-band identity comparison, a nearby participant can
 impersonate another nearby participant; Link therefore treats the connection as
 temporary and untrusted, and never treats it as authority for durable content.
@@ -86,14 +86,11 @@ package checks before it can reach the application catalog.
 
 Android is the currently supported Miror Link platform.
 
-The shared Kotlin implementation and Swift-facing iOS transport are included in
-this source release. Miror Link remains unavailable on iOS until the Nearby
-Connections dependency, generated Bonjour service type, native backpressure, and
-Apple-hardware verification are complete.
+The shared Kotlin implementation and Swift-facing iOS transport are included here.
 
 ## Source layout
 
-The feature-owned implementation lives under:
+The implementation is under:
 
 - `composeApp/src/commonMain/kotlin/com/selenite/scanner/link/`
 - `composeApp/src/androidMain/kotlin/com/selenite/scanner/link/`
@@ -105,7 +102,3 @@ manifest codec used for collection exchange, plus the content verifier and
 installation gate reached by locally relayed updates. Those adjacent files are
 included because they determine what a peer can receive and whether any received
 bytes may affect durable application state.
-
-Full application screens, scanner models, general collection-management code,
-and unrelated Miror features are not part of the current source-available
-release.
