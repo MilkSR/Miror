@@ -60,4 +60,6 @@ Link are included in this repository.
 
 ## License
 
+Miror uses the PolyForm Perimeter 1.0.1 license. It permits inspecting, using,
+modifying, and redistributing the code for noncompetitive purposes.
 The source published here is provided under the terms in [LICENSE](LICENSE).
